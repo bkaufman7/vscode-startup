@@ -1,0 +1,1469 @@
+# Complete Development Environment Setup Guide
+
+**From zero to fully functional Google Apps Script development with VS Code, GitHub Copilot, and clasp**
+
+*This guide assumes you're on Windows and new to coding. We'll walk through every step.*
+
+---
+
+## 📑 Table of Contents
+
+### Quick Navigation
+- [⚡ TLDR - Quick Start](#-tldr---just-tell-me-what-buttons-to-click) - For people who just want to push buttons
+- [🎯 What You'll Have When Done](#-what-youll-have-when-done)
+- [📋 Prerequisites](#-prerequisites)
+
+### Installation Steps
+- [STEP 1: Create GitHub Account](#step-1-create-your-github-account-if-you-dont-have-one)
+- [STEP 2: Install Git](#step-2-install-git)
+- [STEP 3: Configure Git](#step-3-configure-git-with-your-info)
+- [STEP 4: Install Node.js](#step-4-install-nodejs)
+- [STEP 5: Install VS Code](#step-5-install-vs-code)
+- [STEP 6: Install GitHub Copilot](#step-6-install-github-copilot-ai-assistant)
+- [STEP 7: Install VS Code Extensions](#step-7-install-additional-vs-code-extensions)
+- [STEP 8: Install clasp](#step-8-install-clasp-google-apps-script-cli)
+- [STEP 9: Authenticate clasp](#step-9-authenticate-clasp-with-google)
+
+### Project Setup
+- [STEP 10: Start a New Project](#-starting-a-new-google-apps-script-project)
+  - [Option A: Start from Scratch](#option-a-start-from-scratch-new-project)
+  - [Option B: Clone Existing Project](#option-b-clone-an-existing-project-from-github)
+- [STEP 11: Link to Apps Script](#step-11-link-to-your-google-apps-script-project)
+- [STEP 12: Open in VS Code](#step-12-open-project-in-vs-code)
+- [STEP 13: Push Code](#step-13-push-code-to-apps-script)
+- [STEP 14: Verify Deployment](#step-14-verify-in-apps-script-web-editor)
+- [STEP 15: Bind to Spreadsheet](#step-15-bind-script-to-a-google-spreadsheet-if-needed)
+- [STEP 16: Setup GitHub Repository](#step-16-set-up-github-repository-version-control)
+
+### Daily Usage
+- [🔄 Daily Development Workflow](#-daily-development-workflow)
+- [🤖 Using GitHub Copilot](#-using-github-copilot)
+- [🛠️ Essential Commands Reference](#%EF%B8%8F-essential-commands-reference)
+
+### Reference
+- [📁 Project File Structure](#-typical-project-file-structure)
+- [🔐 Security & Best Practices](#-security--best-practices)
+- [🚨 Troubleshooting](#-troubleshooting-common-issues)
+- [🎯 Complete Setup Checklist](#-complete-setup-checklist)
+- [💡 Pro Tips](#-pro-tips)
+- [🚀 Advanced: Google Cloud Platform](#-advanced-google-cloud-platform-optional)
+- [📚 Where to Go from Here](#-where-to-go-from-here)
+
+### Glossary
+- [📖 Glossary of Terms](#-glossary-of-terms)
+
+---
+
+## 🎯 What You'll Have When Done
+
+- ✅ Professional code editor (VS Code)
+- ✅ AI coding assistant (GitHub Copilot)
+- ✅ Version control (Git + GitHub)
+- ✅ Google Apps Script development tools (clasp)
+- ✅ Complete workflow: Write code → Test in Google Sheets → Deploy
+
+---
+
+## 📋 Prerequisites
+
+### Accounts You'll Need (Free)
+
+1. **GitHub Account** - For storing code and accessing Copilot
+   - Go to [github.com](https://github.com)
+   - Click "Sign up"
+   - Follow the prompts
+   - ⚠️ **IMPORTANT**: Remember your username and password!
+
+2. **Google Account** - For Google Sheets and Apps Script
+   - Use your existing Google/Gmail account
+   - Or create one at [google.com](https://google.com)
+
+### Software You'll Install (Free)
+
+- **VS Code** - Your code editor
+- **Node.js** - Required for clasp (the Google Apps Script tool)
+- **Git** - Version control system
+- **clasp** - Google Apps Script command-line tool
+
+---
+
+## 🔧 Step-by-Step Setup
+
+### STEP 1: Create Your GitHub Account (If You Don't Have One)
+
+1. Go to [github.com](https://github.com)
+2. Click **"Sign up"** in the top-right corner
+3. Enter your email address
+4. Create a password (use something secure!)
+5. Choose a username (this will be public)
+6. Complete the verification
+7. Choose the free plan
+
+**✅ Checkpoint**: You should be logged into GitHub and see your dashboard
+
+---
+
+### STEP 2: Install Git
+
+**What is Git?** Version control - it tracks changes to your code so you can go back to earlier versions if needed.
+
+1. Download Git: [git-scm.com/download/win](https://git-scm.com/download/win)
+2. Run the installer
+3. **IMPORTANT**: Use these settings during installation:
+   - ✅ Check "Git from the command line and also from 3rd-party software"
+   - ✅ Check "Use Windows' default console window"
+   - ✅ Accept all other defaults (just click "Next")
+
+4. After installation, open **PowerShell**:
+   - Press `Windows Key + X`
+   - Click "Windows PowerShell" or "Terminal"
+
+5. Verify Git is installed:
+```powershell
+git --version
+```
+
+Expected output:
+```
+git version 2.x.x
+```
+
+**✅ Checkpoint**: Git version displays without errors
+
+---
+
+### STEP 3: Configure Git with Your Info
+
+Tell Git who you are (this will show up in your commits):
+
+```powershell
+git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"
+```
+
+**Replace with your actual name and email** (use the email from your GitHub account)
+
+Example:
+```powershell
+git config --global user.name "John Smith"
+git config --global user.email "john.smith@gmail.com"
+```
+
+Verify:
+```powershell
+git config --global user.name
+git config --global user.email
+```
+
+**✅ Checkpoint**: Your name and email display correctly
+
+---
+
+### STEP 4: Install Node.js
+
+**What is Node.js?** A JavaScript runtime required to run clasp (Google Apps Script command-line tool).
+
+1. Download Node.js: [nodejs.org](https://nodejs.org/)
+   - Choose the **LTS** version (Long Term Support)
+   - Download the Windows Installer (.msi)
+
+2. Run the installer
+   - ✅ Accept the license
+   - ✅ Use default installation location
+   - ✅ Click "Next" through all options
+   - ✅ Click "Install"
+
+3. After installation, **close and reopen PowerShell** (this is important!)
+
+4. Verify installation:
+```powershell
+node --version
+npm --version
+```
+
+Expected output:
+```
+v20.x.x (or similar)
+10.x.x (or similar)
+```
+
+**✅ Checkpoint**: Both node and npm versions display
+
+---
+
+### STEP 5: Install VS Code
+
+**What is VS Code?** Your code editor - where you'll write and edit code.
+
+1. Download VS Code: [code.visualstudio.com](https://code.visualstudio.com/)
+2. Run the installer
+3. **IMPORTANT**: Check these boxes during installation:
+   - ✅ "Add 'Open with Code' action to Windows Explorer file context menu"
+   - ✅ "Add 'Open with Code' action to Windows Explorer directory context menu"
+   - ✅ "Add to PATH"
+
+4. Finish installation and launch VS Code
+
+**✅ Checkpoint**: VS Code opens successfully
+
+---
+
+### STEP 6: Install GitHub Copilot (AI Assistant)
+
+**What is GitHub Copilot?** Your AI pair programmer - it suggests code as you type!
+
+#### 6A. Sign Up for GitHub Copilot
+
+**Free Option** (Limited):
+1. Go to [github.com/features/copilot](https://github.com/features/copilot)
+2. Sign in to GitHub
+3. Click "Start my free trial" or "Try Copilot Free"
+4. Follow the prompts
+5. **Budget**: Free tier includes limited completions per month
+   - Once you hit the limit, suggestions pause until next month
+   - Good for trying it out or light usage
+
+**Pro Option** ($10/month - recommended for serious development):
+1. Go to [github.com/settings/copilot](https://github.com/settings/copilot)
+2. Choose "Copilot Pro" plan
+3. **⚠️ REQUIRES CREDIT CARD** - You will be charged $10/month
+4. Add payment method (credit/debit card)
+5. Enable Copilot
+6. **Budget**: Unlimited completions and chat interactions
+   - No monthly limits
+   - Priority access to latest models
+   - Faster response times
+
+**Which should you choose?**
+- **Free**: Testing it out, occasional scripts, learning
+- **Pro**: Daily development, complex projects, serious automation work
+
+#### 6B. Install Copilot Extensions in VS Code
+
+1. Open VS Code
+2. Click the **Extensions** icon on the left sidebar (or press `Ctrl+Shift+X`)
+3. Search for "**GitHub Copilot**"
+4. Click **Install** on these two extensions:
+   - **GitHub Copilot** (by GitHub)
+   - **GitHub Copilot Chat** (by GitHub)
+
+5. After installation, you'll see a "Sign in to GitHub" button
+6. Click it and sign in with your GitHub account
+7. Authorize VS Code to access your GitHub account
+
+**✅ Checkpoint**: You see the Copilot icon (sparkle/star) in VS Code's status bar
+
+---
+
+### STEP 7: Install Additional VS Code Extensions
+
+These extensions are currently installed and recommended:
+
+#### Essential Extensions:
+
+1. **GitHub Copilot** ✅ (already installed)
+   - AI code suggestions
+
+2. **GitHub Copilot Chat** ✅ (already installed)
+   - Chat with AI about your code
+
+3. **PowerShell** (search and install)
+   - Better PowerShell terminal support
+   - Publisher: Microsoft
+
+4. **GitHub Actions** (search and install)
+   - If you plan to use GitHub automation
+   - Publisher: GitHub
+
+#### Install These in VS Code:
+- Press `Ctrl+Shift+X` to open Extensions
+- Search for each extension name
+- Click "Install"
+
+#### Optional Extensions (Install as needed):
+
+- **Python** - If you work with Python scripts
+- **GitLens** - Advanced Git features and history
+- **Git Graph** - Visualize your Git commit history
+- **Prettier** - Code formatting
+- **ESLint** - JavaScript linting
+- **Live Share** - Collaborate with others in real-time
+- **Markdown All in One** - Better Markdown editing
+- **Better Comments** - Color-coded comments
+- **Bracket Pair Colorizer** - Color-matched brackets
+
+**✅ Checkpoint**: At minimum, GitHub Copilot and Copilot Chat are installed
+
+---
+
+### STEP 8: Install clasp (Google Apps Script CLI)
+
+**What is clasp?** Command-line tool to push/pull code between VS Code and Google Apps Script.
+
+1. In PowerShell, run:
+```powershell
+npm install -g @google/clasp
+```
+
+This will take a minute. You'll see installation progress.
+
+2. Verify installation:
+```powershell
+clasp --version
+```
+
+Expected output:
+```
+2.4.x
+```
+
+**✅ Checkpoint**: clasp version displays
+
+---
+
+### STEP 9: Authenticate clasp with Google
+
+**This connects clasp to your Google Account:**
+
+```powershell
+clasp login
+```
+
+**What happens:**
+1. A browser window opens
+2. You'll see "Sign in to Google"
+3. Choose your Google account
+4. Click "Allow" to give clasp permission
+5. You'll see "Success! Logged in as your.email@gmail.com"
+
+**⚠️ IMPORTANT**: Use the same Google account that owns your spreadsheet!
+
+**✅ Checkpoint**: Terminal shows "Logged in as [your email]"
+
+---
+
+## 🚀 Starting a New Google Apps Script Project
+
+Now that all tools are installed, here's how to start ANY new project:
+
+---
+
+### STEP 10: Choose Your Starting Point
+
+#### Option A: Start from Scratch (New Project)
+
+**IMPORTANT: Where to Create Your Project Folder**
+
+**Local Machine Storage** (Recommended):
+- ✅ **Use this if**: Working from one computer, or no VPN required
+- ✅ **Pros**: Faster, no network delays, works offline
+- ✅ **Location**: `C:\Users\YourUsername\Documents\Projects`
+
+**Network/Shared Drive** (VPN Required):
+- ⚠️ **Use this if**: Need to access from multiple locations via VPN
+- ⚠️ **Cons**: Slower, requires VPN connection every time, network dependency
+- ⚠️ **Location**: Your mapped network drive (e.g., `Z:\Projects`)
+- ⚠️ **Note**: You MUST connect to VPN before opening VS Code or running any commands
+
+**Which should you choose?**
+- **Most people**: Use local machine (C: drive)
+- **Team environments**: Use network drive only if you must access from multiple offices
+
+1. Create a project folder:
+```powershell
+# LOCAL MACHINE (Recommended)
+cd C:\Users\YourUsername\Documents
+mkdir Projects
+cd Projects
+mkdir MyGoogleSheetsProject
+cd MyGoogleSheetsProject
+
+# OR NETWORK DRIVE (if VPN required)
+# Make sure you're connected to VPN first!
+cd Z:\Projects  # Replace Z: with your network drive letter
+mkdir MyGoogleSheetsProject
+cd MyGoogleSheetsProject
+```
+
+2. Initialize Git:
+```powershell
+git init
+```
+
+3. Create a new Apps Script project:
+```powershell
+clasp create --title "My Project Name" --type standalone
+```
+
+**What this does:**
+- Creates a new Apps Script project in your Google Drive
+- Creates `.clasp.json` file (links your folder to the script)
+- Creates `appsscript.json` file (configuration)
+
+4. Create your first script file:
+   - In VS Code: File → New File
+   - Save as `Code.gs`
+   - Start coding!
+
+**✅ Checkpoint**: You have `.clasp.json` and can run `clasp push`
+
+---
+
+#### Option B: Clone an Existing Project from GitHub
+
+**If someone shared a project with you:**
+
+1. Navigate to your projects folder:
+```powershell
+cd C:\Users\YourUsername\Documents
+```
+
+2. Clone the repository:
+```powershell
+git clone https://github.com/USERNAME/REPOSITORY-NAME.git
+cd REPOSITORY-NAME
+```
+
+**Replace with actual GitHub URL** (example):
+```powershell
+git clone https://github.com/bkaufman7/END-OF-MONTH-CM360-CPC-CPM-FLIGHT-QA---VSCODE-VERSION.git
+cd "CM360 END OF MONTH AUDIT"
+```
+
+3. Link to YOUR Apps Script project (see Step 11)
+
+**✅ Checkpoint**: Repository files are on your computer
+
+---
+
+### STEP 11: Link to Your Google Apps Script Project
+
+#### If Linking to an EXISTING Apps Script Project:
+
+**Get your Script ID:**
+1. Open your Google Spreadsheet
+2. Click **Extensions → Apps Script**
+3. In the Apps Script editor, click the **Settings** (gear) icon
+4. Copy the **Script ID**
+
+**Create `.clasp.json` file:**
+
+In PowerShell (make sure you're in your project folder):
+```powershell
+# Replace YOUR_SCRIPT_ID with the ID you copied
+# Replace the path with your actual project path
+
+$claspConfig = @"
+{
+  "scriptId": "YOUR_SCRIPT_ID_HERE"
+}
+"@
+
+$claspConfig | Out-File -FilePath .clasp.json -Encoding utf8
+```
+
+**Example** (with real values):
+```powershell
+$claspConfig = @"
+{
+  "scriptId": "1a2b3c4d5e6f7g8h9i0j"
+}
+"@
+
+$claspConfig | Out-File -FilePath .clasp.json -Encoding utf8
+```
+
+**✅ Checkpoint**: `.clasp.json` file exists in your project folder
+
+---
+
+### STEP 12: Open Project in VS Code
+
+```powershell
+# Open current folder in VS Code
+code .
+```
+
+VS Code will open with your project files visible on the left.
+
+**✅ Checkpoint**: You see your project files in VS Code's Explorer pane
+
+---
+
+### STEP 13: Push Code to Apps Script
+
+**In VS Code terminal** (or PowerShell in your project folder):
+
+```powershell
+clasp push
+```
+
+**What happens:**
+- VS Code sends your `.gs` files to Google Apps Script
+- You'll see a list of files pushed
+
+Expected output:
+```
+Pushed 2 files.
+└─ appsscript.json
+└─ Code.gs
+```
+
+**✅ Checkpoint**: Files pushed without errors
+
+---
+
+### STEP 14: Verify in Apps Script Web Editor
+
+```powershell
+# Open your project in browser
+clasp open
+```
+
+**You should see:**
+- Your code files in the Apps Script editor
+- Same code as in VS Code
+
+**✅ Checkpoint**: Code appears in Apps Script editor
+
+---
+
+### STEP 15: Bind Script to a Google Spreadsheet (If Needed)
+
+**If you want your script to work with a specific Google Sheet:**
+
+1. Open your Google Spreadsheet
+2. Click **Extensions → Apps Script**
+3. Delete any existing code
+4. Go back to PowerShell and run:
+```powershell
+clasp push
+```
+5. Refresh your spreadsheet
+6. The custom menu should appear (if your code has `onOpen()` function)
+
+**✅ Checkpoint**: Custom menu appears in your spreadsheet
+
+---
+
+### STEP 16: Set Up GitHub Repository (Version Control)
+
+**Why?** Save your code online and track changes.
+
+#### Create a New Repository on GitHub:
+
+1. Go to [github.com](https://github.com)
+2. Click the **"+"** icon (top-right) → **"New repository"**
+3. Name your repository (e.g., "my-google-sheets-automation")
+4. Choose **Private** or **Public**
+5. **Do NOT** check "Initialize with README" (you already have files)
+6. Click **"Create repository"**
+
+#### Connect Your Local Project to GitHub:
+
+GitHub will show you commands. Copy them, or use these:
+
+```powershell
+# Add GitHub as the remote repository (replace with YOUR repository URL)
+git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
+
+# Add all files to git
+git add .
+
+# Make your first commit
+git commit -m "Initial commit"
+
+# Push to GitHub
+git push -u origin main
+```
+
+**Example** (with real values):
+```powershell
+git remote add origin https://github.com/johnsmith/my-sheets-project.git
+git add .
+git commit -m "Initial commit"
+git push -u origin main
+```
+
+**You'll be asked for credentials:**
+- Username: Your GitHub username
+- Password: Use a **Personal Access Token** (not your password!)
+
+**How to create a Personal Access Token:**
+1. GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
+2. Click "Generate new token"
+3. Check "repo" scope
+4. Copy the token and save it somewhere safe
+5. Use this token as your password
+
+**✅ Checkpoint**: Your code is visible on GitHub.com
+
+---
+
+## 📁 Typical Project File Structure
+
+After complete setup:
+
+```
+YourProjectFolder/
+├── .clasp.json                    # Links to your Apps Script project (DON'T commit to Git)
+├── .claspignore                   # Files to ignore when pushing to Apps Script
+├── .git/                          # Git repository data
+├── .gitignore                     # Files to ignore in Git
+├── appsscript.json                # Apps Script configuration
+├── Code.gs                        # Your main script file
+├── OtherFile.gs                   # Additional script files (optional)
+└── README.md                      # Project documentation
+```
+
+**Important files explained:**
+
+- **`.clasp.json`**: Links your folder to your Google Apps Script project. **Never commit this to Git!** (Has your Script ID)
+- **`.gitignore`**: Tells Git which files to ignore (like `.clasp.json`)
+- **`appsscript.json`**: Configuration for your Apps Script project (timezone, API services, etc.)
+- **`Code.gs`**: Your actual script code (can have multiple `.gs` files)
+
+---
+
+## 🔄 Daily Development Workflow
+
+**Once everything is set up, here's your daily workflow:**
+
+### Making Changes to Your Code
+
+1. **Open your project in VS Code**
+   ```powershell
+   cd C:\Users\YourUsername\YourProject
+   code .
+   ```
+
+2. **Edit your code**
+   - Make changes to your `.gs` files
+   - GitHub Copilot will suggest code as you type!
+   - Press `Tab` to accept suggestions
+   - Press `Ctrl+Enter` to see more suggestions
+
+3. **Save your changes**
+   - Press `Ctrl+S` to save
+
+4. **Push to Apps Script** (so changes work in Google Sheets)
+   ```powershell
+   clasp push
+   ```
+
+5. **Test in your spreadsheet**
+   - Open your Google Spreadsheet
+   - Use your custom menu
+   - Test the functionality
+
+6. **If it works, commit to Git** (save version)
+   ```powershell
+   git add .
+   git commit -m "Describe what you changed"
+   git push
+   ```
+
+### Example Workflow:
+
+```powershell
+# 1. Open project
+code .
+
+# 2. Make changes in VS Code, save
+
+# 3. Push to Google Apps Script
+clasp push
+
+# 4. Test in Google Sheets
+
+# 5. If it works, save to Git
+git add .
+git commit -m "Fixed date calculation bug"
+git push
+```
+
+### If You Made Changes in Apps Script Web Editor
+
+**Pull changes back to VS Code:**
+
+```powershell
+clasp pull
+```
+
+This downloads the latest code from Apps Script to your local files.
+
+---
+
+## 🤖 Using GitHub Copilot
+
+### How Copilot Helps You
+
+As you type code, Copilot suggests completions:
+
+1. **Inline suggestions** (gray text)
+   - Press `Tab` to accept
+   - Press `Esc` to reject
+   - Keep typing to ignore
+
+2. **Chat with Copilot**
+   - Press `Ctrl+I` for inline chat
+   - Or click the Copilot Chat icon in the sidebar
+   - Ask questions like:
+     - "How do I loop through rows in Google Sheets?"
+     - "Write a function to send an email"
+     - "Explain this code"
+
+3. **Generate entire functions**
+   - Type a comment describing what you want:
+   ```javascript
+   // Function to find duplicate values in column A
+   ```
+   - Press `Enter`
+   - Copilot suggests the entire function!
+
+### Copilot Tips:
+
+- **Be specific in comments**: "Create a function that emails a summary to admin@company.com every Monday at 9am"
+- **Use descriptive variable names**: Copilot understands context better
+- **Ask questions**: "Why is this function slow?" or "How can I optimize this?"
+- **Learn from suggestions**: Read what Copilot suggests to learn new techniques
+
+---
+
+## 🛠️ Essential Commands Reference
+
+**Keep this handy - you'll use these all the time!**
+
+### clasp Commands (Google Apps Script)
+
+```powershell
+# Push your code TO Apps Script (local → cloud)
+clasp push
+
+# Pull code FROM Apps Script (cloud → local)
+clasp pull
+
+# Open your project in the browser
+clasp open
+
+# View your Apps Script logs
+clasp logs
+
+# Check which project you're connected to
+clasp status
+
+# Login to Google (if logged out)
+clasp login
+
+# Logout
+clasp logout
+```
+
+### Git Commands (Version Control)
+
+```powershell
+# See what files changed
+git status
+
+# Add all changes to be committed
+git add .
+
+# Save changes with a message
+git commit -m "Describe what you changed"
+
+# Send changes to GitHub
+git push
+
+# Get latest changes from GitHub
+git pull
+
+# View your commit history
+git log --oneline
+
+# See what changed in files
+git diff
+```
+
+### VS Code Shortcuts
+
+```
+Ctrl+S          Save file
+Ctrl+Shift+P    Command palette (search for any VS Code command)
+Ctrl+`          Open/close terminal
+Ctrl+B          Toggle sidebar
+Ctrl+Shift+X    Extensions
+Ctrl+Shift+E    Explorer (file tree)
+Ctrl+I          Copilot inline chat
+Ctrl+/          Comment/uncomment line
+Ctrl+F          Find in current file
+Ctrl+Shift+F    Find in all files
+```
+
+---
+
+## 🔐 Security & Best Practices
+
+### Critical: Files to NEVER Commit to GitHub
+
+**Your `.gitignore` file should include:**
+
+```gitignore
+# clasp authentication (has your Script ID!)
+.clasp.json
+.clasprc.json
+
+# Node modules
+node_modules/
+
+# Environment variables (passwords, API keys)
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+```
+
+**Why?**
+- `.clasp.json` contains your Script ID (could expose your project)
+- `.env` might contain passwords or API keys
+- Committing these = security risk!
+
+### Create a `.gitignore` File:
+
+In your project folder:
+
+```powershell
+$gitignore = @"
+# clasp authentication
+.clasp.json
+.clasprc.json
+
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+"@
+
+$gitignore | Out-File -FilePath .gitignore -Encoding utf8
+```
+
+**✅ Verify**: `.gitignore` file exists before your first `git commit`
+
+---
+
+## 🚨 Troubleshooting Common Issues
+
+### 😕 "I can't push to Apps Script" - Authentication Error
+
+**Problem**: `clasp push` says "Not authorized" or "Login required"
+
+**Solution**:
+```powershell
+clasp logout
+clasp login
+```
+Then try `clasp push` again.
+
+---
+
+### 😕 "No files to push" Error
+
+**Problem**: `clasp push` says "No files to push"
+
+**Fix 1 - Check if `.claspignore` exists:**
+
+If you have a `.claspignore` file, it should look like:
+```
+**/**
+!appsscript.json
+!**/*.gs
+```
+
+**Fix 2 - Make sure you have `.gs` files:**
+
+Your project needs at least one `.gs` file (e.g., `Code.gs`)
+
+---
+
+### 😕 "Changes don't appear in my spreadsheet"
+
+**Problem**: You pushed code but the spreadsheet doesn't reflect changes
+
+**Checklist**:
+1. ✅ Did you run `clasp push`?
+2. ✅ Did it say "Pushed X files"?
+3. ✅ Refresh your spreadsheet (press `F5`)
+4. ✅ Wait 10 seconds (sometimes takes a moment)
+5. ✅ Check Apps Script editor: `clasp open`
+
+If menu doesn't appear:
+- Make sure your code has an `onOpen()` function
+- Close and reopen the spreadsheet
+- Check Executions log in Apps Script for errors
+
+---
+
+### 😕 "Git push failed" - Authentication Error
+
+**Problem**: `git push` asks for password but it's rejected
+
+**Solution**: You need a **Personal Access Token**, not your password!
+
+**Create a token:**
+1. Go to GitHub.com
+2. Settings → Developer settings → Personal access tokens → Tokens (classic)
+3. Click "Generate new token (classic)"
+4. Check "repo" scope
+5. Click "Generate token"
+6. **Copy the token** (you won't see it again!)
+7. Use this token as your password when `git push` asks
+
+**Save credentials** (so you don't have to enter every time):
+```powershell
+git config --global credential.helper wincred
+```
+
+---
+
+### 😕 "Permission denied" or "Forbidden"
+
+**Problem**: Can't access spreadsheet or Apps Script
+
+**Cause**: You're using the wrong Google account
+
+**Solution**:
+1. Make sure you're logged into the correct Google account in your browser
+2. Logout and login to clasp with the RIGHT account:
+   ```powershell
+   clasp logout
+   clasp login
+   ```
+3. Choose the account that owns the spreadsheet
+
+---
+
+### 😕 "Script ID not found"
+
+**Problem**: `.clasp.json` has wrong Script ID
+
+**Fix**:
+1. Open your spreadsheet
+2. Extensions → Apps Script
+3. Click Settings (gear icon)
+4. Copy the Script ID
+5. Update `.clasp.json`:
+   ```json
+   {
+     "scriptId": "PASTE_CORRECT_ID_HERE"
+   }
+   ```
+
+---
+
+### 😕 "Copilot isn't suggesting anything"
+
+**Problem**: Copilot installed but not working
+
+**Checklist**:
+1. ✅ Are you signed into GitHub in VS Code?
+   - Click Copilot icon in status bar
+2. ✅ Do you have an active Copilot subscription?
+   - Check [github.com/settings/copilot](https://github.com/settings/copilot)
+3. ✅ Is Copilot enabled for this file type?
+   - `.gs` files should work
+4. ✅ Try restarting VS Code
+
+---
+
+### 😕 "Command not found: clasp" or "Command not found: git"
+
+**Problem**: Installed but terminal doesn't recognize commands
+
+**Solution**:
+1. **Close and reopen PowerShell** (very important!)
+2. If still not working, restart your computer
+3. Verify installation:
+   ```powershell
+   node --version
+   npm --version
+   git --version
+   clasp --version
+   ```
+
+---
+
+### 😕 "How do I enable Gmail/Drive APIs?"
+
+**Problem**: Your script needs to access Gmail or Drive
+
+**Solution**:
+1. Open Apps Script editor: `clasp open`
+2. Click "Services" (+ icon on left sidebar)
+3. Find "Gmail API" or "Drive API"
+4. Click "Add"
+5. Choose version (latest)
+6. Click "Add"
+
+**Or update `appsscript.json`** in VS Code:
+```json
+{
+  "timeZone": "America/New_York",
+  "dependencies": {
+    "enabledAdvancedServices": [
+      {
+        "userSymbol": "Gmail",
+        "version": "v1",
+        "serviceId": "gmail"
+      },
+      {
+        "userSymbol": "Drive",
+        "version": "v3",
+        "serviceId": "drive"
+      }
+    ]
+  },
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8"
+}
+```
+
+Then run `clasp push`
+
+---
+
+## 🎯 Complete Setup Checklist
+
+Use this to verify everything is working:
+
+### Software Installation
+- [ ] Git installed (`git --version` works)
+- [ ] Git configured with your name and email
+- [ ] Node.js installed (`node --version` works)
+- [ ] npm installed (`npm --version` works)
+- [ ] VS Code installed and opens
+- [ ] clasp installed (`clasp --version` works)
+
+### Accounts & Authentication
+- [ ] GitHub account created
+- [ ] Personal Access Token created (for Git)
+- [ ] Logged into clasp (`clasp login` completed)
+- [ ] Google account ready
+
+### VS Code Setup
+- [ ] GitHub Copilot extension installed
+- [ ] GitHub Copilot Chat extension installed
+- [ ] Signed into GitHub in VS Code
+- [ ] Copilot icon shows in status bar
+- [ ] PowerShell extension installed (optional)
+
+### Project Setup
+- [ ] Project folder created
+- [ ] `.clasp.json` exists with Script ID
+- [ ] `.gitignore` exists
+- [ ] Code pushed successfully (`clasp push`)
+- [ ] Can open project in browser (`clasp open`)
+
+### Spreadsheet Integration (If Applicable)
+- [ ] Script bound to spreadsheet
+- [ ] Menu appears when spreadsheet opens
+- [ ] Can run functions from menu
+
+### Version Control
+- [ ] GitHub repository created
+- [ ] Local project connected to GitHub (`git remote -v` shows repo)
+- [ ] Initial commit made
+- [ ] Pushed to GitHub successfully
+
+---
+
+## 💡 Pro Tips
+
+### Speed Up Your Workflow
+
+1. **Use keyboard shortcuts**
+   - `Ctrl+S` to save
+   - `Ctrl+`` to open terminal
+   - `Ctrl+I` for Copilot chat
+
+2. **Terminal in VS Code**
+   - No need to switch to PowerShell window
+   - Terminal → New Terminal (or `Ctrl+'`)
+   - Run `clasp push` right in VS Code!
+
+3. **Multi-file editing**
+   - Open multiple `.gs` files as tabs
+   - Split view: Drag tab to side
+
+4. **Copilot shortcuts**
+   - Type `//` for comment suggestions
+   - Start typing a function name and let Copilot complete it
+   - Ask Copilot to explain errors
+
+### Learning Resources
+
+- **Apps Script Tutorials**: [developers.google.com/apps-script/guides](https://developers.google.com/apps-script/guides)
+- **GitHub Copilot Guide**: [docs.github.com/en/copilot](https://docs.github.com/en/copilot)
+- **VS Code Tips**: [code.visualstudio.com/docs/getstarted/tips-and-tricks](https://code.visualstudio.com/docs/getstarted/tips-and-tricks)
+
+---
+
+## 🚀 Advanced: Google Cloud Platform (Optional)
+
+**When you might need GCP:**
+- Using APIs beyond Gmail/Drive (BigQuery, Cloud Storage, etc.)
+- Need higher quota limits
+- Building production apps with many users
+- OAuth authentication for users
+
+**How to set up:**
+1. Go to [console.cloud.google.com](https://console.cloud.google.com)
+2. Create a new project
+3. Enable APIs you need
+4. Link to your Apps Script project
+
+**For most projects, the basic Apps Script setup is sufficient!**
+
+---
+
+## 📚 Where to Go from Here
+
+### You're Ready To:
+✅ Write code in VS Code with AI assistance  
+✅ Test in Google Sheets  
+✅ Save versions with Git  
+✅ Share on GitHub  
+✅ Collaborate with others
+
+### Next Steps:
+1. **Start coding!** Open VS Code and create `Code.gs`
+2. **Use Copilot**: Type comments describing what you want, let it suggest code
+3. **Test frequently**: `clasp push` after every change and test in your spreadsheet
+4. **Commit often**: Save your progress with Git
+5. **Ask Copilot for help**: It can explain errors, suggest improvements, and teach you!
+
+### Common First Scripts:
+- Custom menu with functions
+- Email automation
+- Data import/export
+- Report generation
+- Data validation
+
+**Ask Copilot Chat**: "Show me a simple Google Sheets Apps Script example with a custom menu"
+
+---
+
+## 🆘 Still Stuck?
+
+### Check These:
+1. **All commands work in PowerShell?**
+   - `git --version`
+   - `node --version`
+   - `clasp --version`
+
+2. **Logged into everything?**
+   - clasp: `clasp login`
+   - VS Code: Click account icon (bottom-left)
+   - GitHub: Check [github.com](https://github.com)
+
+3. **Files in the right place?**
+   - `.clasp.json` in your project folder
+   - `.gs` files in your project folder
+   - PowerShell is IN your project folder (`cd` to it!)
+
+4. **Still not working?**
+   - Ask GitHub Copilot! (Press `Ctrl+I` and describe the issue)
+   - Check error messages carefully
+   - Google the error message
+   - Restart VS Code and PowerShell
+
+---
+
+**Last Updated**: December 9, 2025  
+**Perfect for**: Ad Ops teams, Marketing Ops, Anyone automating Google Sheets  
+**Difficulty**: Beginner-friendly (step-by-step)  
+**Time to Complete**: 30-45 minutes
+
+---
+
+## ⚡ TLDR - "Just Tell Me What Buttons to Click"
+
+**For people who want the absolute fastest path with zero explanation:**
+
+### Quick Install Script (Copy-Paste This)
+
+1. **Open PowerShell as Administrator**
+   - Press `Windows Key`
+   - Type "PowerShell"
+   - Right-click "Windows PowerShell"
+   - Click "Run as Administrator"
+
+2. **Copy and paste this entire block** (press Enter after pasting):
+
+```powershell
+# Install Chocolatey (package manager)
+Set-ExecutionPolicy Bypass -Scope Process -Force
+[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+# Install Git, Node.js, and VS Code
+choco install git nodejs vscode -y
+
+# Refresh environment
+refreshenv
+
+# Install clasp
+npm install -g @google/clasp
+
+# Configure Git (REPLACE WITH YOUR INFO)
+git config --global user.name "Your Name"
+git config --global user.email "your.email@gmail.com"
+
+# Done!
+Write-Host "✅ Installation complete! Close this window and follow Step-by-Step below." -ForegroundColor Green
+```
+
+**⚠️ IMPORTANT**: Replace `"Your Name"` and `"your.email@gmail.com"` with your actual info!
+
+---
+
+### After Quick Install, Do These Steps:
+
+**3. Login to clasp**
+```powershell
+clasp login
+```
+- Browser opens → Sign in to Google → Click "Allow"
+
+**4. Install VS Code Extensions**
+- Open VS Code
+- Press `Ctrl+Shift+X`
+- Search "GitHub Copilot" → Click Install (both Copilot and Copilot Chat)
+- Sign in to GitHub when prompted
+
+**5. Sign up for GitHub Copilot**
+- Go to [github.com/features/copilot](https://github.com/features/copilot)
+- Choose Free (limited) or Pro ($10/month, needs credit card)
+- Follow the signup flow
+
+**6. Create a project folder**
+```powershell
+cd C:\Users\YourUsername\Documents
+mkdir Projects
+cd Projects
+mkdir MyProject
+cd MyProject
+```
+
+**7. Create new Apps Script project**
+```powershell
+clasp create --title "My Project" --type standalone
+```
+
+**8. Open in VS Code**
+```powershell
+code .
+```
+
+**9. Create your code file**
+- In VS Code: File → New File
+- Save as `Code.gs`
+- Start typing → Copilot will suggest code!
+
+**10. Push to Google**
+```powershell
+clasp push
+```
+
+**11. Open in browser to see it**
+```powershell
+clasp open
+```
+
+**Done! 🎉**
+
+---
+
+### Even Faster? Use This One-Command Setup:
+
+```powershell
+# Run this in PowerShell (as Administrator)
+Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1')); choco install git nodejs vscode -y; refreshenv; npm install -g @google/clasp; Write-Host "✅ Done! Now: 1) clasp login, 2) Install Copilot in VS Code, 3) Create project folder" -ForegroundColor Green
+```
+
+**Then manually do**:
+1. `clasp login` (browser opens, click Allow)
+2. Open VS Code → Install Copilot extension → Sign in
+3. `cd` to where you want your project → `clasp create` → start coding!
+
+---
+
+### "I Don't Want to Think" Checklist:
+
+- [ ] Run the PowerShell install script above (Step 2)
+- [ ] Run `clasp login` (browser opens, click Allow)
+- [ ] Open VS Code
+- [ ] Press `Ctrl+Shift+X`, search "Copilot", install both
+- [ ] Sign in to GitHub in VS Code (Copilot prompts you)
+- [ ] Go to [github.com/settings/copilot](https://github.com/settings/copilot) and subscribe
+- [ ] Create folder: `mkdir C:\Projects\MyProject`
+- [ ] `cd C:\Projects\MyProject`
+- [ ] `clasp create --title "Test" --type standalone`
+- [ ] `code .` (opens VS Code)
+- [ ] Create `Code.gs` file and start typing
+- [ ] `clasp push` when ready
+- [ ] `clasp open` to see in browser
+
+**If anything breaks**: Go back to the detailed guide above and follow step-by-step.
+
+---
+
+### Network Drive Users (VPN Required):
+
+If you MUST use a network drive:
+
+1. **Connect to VPN FIRST** (every single time!)
+2. Create folder on network drive: `Z:\Projects\MyProject`
+3. `cd Z:\Projects\MyProject`
+4. Continue with steps above
+5. **Remember**: You need VPN connected EVERY time you:
+   - Open VS Code
+   - Run `clasp push`
+   - Run `git` commands
+   - Edit files
+
+**Recommendation**: Use local drive (`C:\`) instead unless you absolutely need network access.
+
+---
+
+**⚠️ TROUBLESHOOTING TLDR**:
+- Command not found? → Close and reopen PowerShell
+- Still not found? → Restart computer
+- clasp login fails? → Use correct Google account
+- Copilot not working? → Check [github.com/settings/copilot](https://github.com/settings/copilot) subscription active
+- Can't push? → Make sure you're in project folder (`cd` to it first)
+
+---
+
+**That's it!** For detailed explanations of what each step does, read the full guide above.
+
+---
+
+## 📖 Glossary of Terms
+
+**Not sure what something means? Here's a quick reference:**
+
+### Development Tools
+
+| Term | What It Is | Why You Need It |
+|------|------------|-----------------|
+| **VS Code** | Visual Studio Code - A free code editor by Microsoft | Where you write and edit your code. Think of it like Microsoft Word, but for code. |
+| **Git** | Version control system | Tracks all changes to your code so you can go back to earlier versions if something breaks. Like "Track Changes" in Word. |
+| **GitHub** | Website for hosting code | Online storage for your code. Like Google Drive, but specifically for code projects. |
+| **clasp** | Command Line Apps Script | Tool that sends your code from VS Code to Google Apps Script. The bridge between your computer and Google. |
+| **Node.js** | JavaScript runtime | Software needed to run clasp. You won't interact with it directly, but clasp needs it installed. |
+| **npm** | Node Package Manager | Installs coding tools like clasp. Comes with Node.js automatically. |
+| **PowerShell** | Windows command-line tool | Terminal where you type commands instead of clicking buttons. Built into Windows. |
+
+### Apps Script Concepts
+
+| Term | What It Is | Example |
+|------|------------|---------|
+| **Apps Script** | Google's coding platform for automating Google Workspace | Write code to automate Google Sheets, Gmail, Drive, etc. |
+| **Script ID** | Unique identifier for your Apps Script project | `1a2b3c4d5e6f7g8h9i0j` - Found in Apps Script project settings |
+| **.gs file** | Google Script file extension | `Code.gs`, `Functions.gs` - Your actual code files |
+| **Bound Script** | Script attached to a specific spreadsheet | Opens when you go to Extensions → Apps Script in the sheet |
+| **Standalone Script** | Script not attached to any file | Exists on its own in Google Drive |
+| **Trigger** | Automated scheduler for your functions | Run a function every day at 9am, or when spreadsheet opens |
+
+### Copilot Terms
+
+| Term | What It Is | How It Helps |
+|------|------------|--------------|
+| **GitHub Copilot** | AI coding assistant | Suggests code as you type, like autocomplete on steroids |
+| **Copilot Chat** | Chat interface with Copilot | Ask questions like "How do I send an email?" and get code |
+| **Inline Suggestion** | Gray text that appears as you type | Press Tab to accept, Esc to reject |
+| **Completion** | Single code suggestion | Each time Copilot suggests code, that's one "completion" |
+| **Free Tier Limit** | Monthly cap on completions | Free users get limited suggestions per month |
+
+### Git & GitHub Terms
+
+| Term | What It Is | When You Use It |
+|------|------------|-----------------|
+| **Repository (repo)** | Project folder with all your code | Your entire project stored on GitHub |
+| **Commit** | Saved snapshot of your code | "Save point" you can return to later |
+| **Push** | Send changes to GitHub | Upload your local changes to the cloud |
+| **Pull** | Get changes from GitHub | Download latest code from the cloud |
+| **Clone** | Copy a repository to your computer | Download someone else's project to work on |
+| **Branch** | Separate version of your code | Test new features without breaking main code |
+| **Remote** | GitHub URL for your repository | The "address" of your project on GitHub |
+| **Local** | Files on your computer | Your copy of the code that you edit |
+
+### File & Configuration Terms
+
+| Term | What It Is | Example |
+|------|------------|---------|
+| **.clasp.json** | Configuration file linking to your script | `{"scriptId": "abc123"}` - DON'T commit to Git! |
+| **.gitignore** | List of files Git should ignore | Prevents sensitive files from going to GitHub |
+| **appsscript.json** | Apps Script configuration file | Sets timezone, enabled APIs, runtime version |
+| **Personal Access Token** | Password for GitHub CLI access | Used instead of your actual password for `git push` |
+| **Script Properties** | Storage for your script's data | Like variables that persist between runs |
+
+### Network & Storage Terms
+
+| Term | What It Is | When You'd Use It |
+|------|------------|-------------------|
+| **Local Drive** | Your computer's hard drive (C:) | Recommended for most people - faster, works offline |
+| **Network Drive** | Shared company drive (Z:, etc.) | Only if you need to access from multiple locations |
+| **VPN** | Virtual Private Network | Secure connection to company network (required for network drives) |
+| **Mapped Drive** | Network folder that appears as a drive letter | Z:\\ might actually be \\\\company\\share |
+
+### Common Commands Explained
+
+| Command | What It Does | Example |
+|---------|--------------|---------|
+| `cd` | Change Directory - move to a folder | `cd C:\Projects` |
+| `mkdir` | Make Directory - create a new folder | `mkdir MyProject` |
+| `clasp push` | Push code to Google Apps Script | Uploads your .gs files |
+| `clasp pull` | Pull code from Apps Script | Downloads latest from Google |
+| `clasp open` | Open project in browser | Opens Apps Script editor |
+| `git add .` | Stage all changes for commit | Prepares files to be saved |
+| `git commit -m` | Save changes with a message | Creates a save point |
+| `git push` | Upload to GitHub | Sends commits to the cloud |
+| `code .` | Open current folder in VS Code | `.` means "current folder" |
+
+### Common Errors Decoded
+
+| Error Message | What It Means | Fix |
+|---------------|---------------|-----|
+| "Command not found" | Tool isn't installed or PowerShell needs restart | Close/reopen PowerShell or restart computer |
+| "Permission denied" | Wrong Google account or not authenticated | Run `clasp logout` then `clasp login` |
+| "No files to push" | Nothing to upload | Make sure you have .gs files and check .claspignore |
+| "Script ID not found" | Wrong ID in .clasp.json | Copy Script ID from Apps Script → Settings |
+| "Authentication failed" (Git) | Need Personal Access Token, not password | Create token at github.com/settings/tokens |
+| "Not authorized" (clasp) | Not logged in or wrong account | Run `clasp login` |
+
+### Abbreviations & Acronyms
+
+| Abbreviation | Full Name | What It Means |
+|--------------|-----------|---------------|
+| **API** | Application Programming Interface | How different programs talk to each other |
+| **CLI** | Command Line Interface | Tools you use by typing commands (like clasp) |
+| **GUI** | Graphical User Interface | Tools with buttons and windows you click |
+| **JSON** | JavaScript Object Notation | File format for configuration (.clasp.json, appsscript.json) |
+| **IDE** | Integrated Development Environment | Fancy term for code editor (VS Code is an IDE) |
+| **VCS** | Version Control System | Git is a VCS - tracks changes to code |
+| **GCP** | Google Cloud Platform | Advanced Google services (BigQuery, Cloud Storage) |
+| **OAuth** | Open Authorization | How apps get permission to access your Google account |
+
+---
+
+**💡 Tip**: Bookmark this glossary! You'll refer back to it as you learn.
+
+---
+
+**[↑ Back to Top](#-table-of-contents)**
